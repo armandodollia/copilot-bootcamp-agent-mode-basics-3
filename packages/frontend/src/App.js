@@ -6,6 +6,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [newItem, setNewItem] = useState('');
+  const [deleteLoading, setDeleteLoading] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -55,6 +56,28 @@ function App() {
     }
   };
 
+  const handleDelete = async (id) => {
+    setDeleteLoading(id);
+    try {
+      const response = await fetch(`/api/items/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete item');
+      }
+
+      // Remove the deleted item from the state
+      setData(data.filter(item => item.id !== id));
+      setError(null);
+    } catch (err) {
+      setError('Error deleting item: ' + err.message);
+      console.error('Error deleting item:', err);
+    } finally {
+      setDeleteLoading(null);
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -84,7 +107,16 @@ function App() {
             <ul>
               {data.length > 0 ? (
                 data.map((item) => (
-                  <li key={item.id}>{item.name}</li>
+                  <li key={item.id}>
+                    {item.name}
+                    <button 
+                      className="delete-button"
+                      onClick={() => handleDelete(item.id)} 
+                      disabled={deleteLoading === item.id}
+                    >
+                      {deleteLoading === item.id ? 'Deleting...' : 'Delete'}
+                    </button>
+                  </li>
                 ))
               ) : (
                 <p>No items found. Add some!</p>
