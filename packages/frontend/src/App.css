@@ -98,5 +98,30 @@ li:last-child {
 
 .error {
   color: #d32f2f;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.items-table th,
+.items-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.items-table th {
+  background-color: #f2f2f2;
   font-weight: bold;
+}
+
+.items-table tr:last-child td {
+  border-bottom: none;
+}
+
+.items-table tr:hover {
+  background-color: #f5f5f5;
 }
