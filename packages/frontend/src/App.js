@@ -1,6 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableContainer, 
+  TableHead, 
+  TableRow, 
+  Paper, 
+  Button, 
+  TextField, 
+  Typography, 
+  Box, 
+  CircularProgress, 
+  Alert
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import './App.css';
 
+/**
+ * Main App component for the item management application
+ * Follows project guidelines for component structure and error handling
+ */
 function App() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -87,50 +107,80 @@ function App() {
 
       <main>
         <section className="add-item-section">
-          <h2>Add New Item</h2>
+          <Typography variant="h5" component="h2" gutterBottom>
+            Add New Item
+          </Typography>
           <form onSubmit={handleSubmit}>
-            <input
-              type="text"
+            <TextField
+              fullWidth
+              variant="outlined"
+              size="small"
               value={newItem}
               onChange={e => setNewItem(e.target.value)}
               placeholder="Enter item name"
+              margin="normal"
+              label="Item Name"
+              sx={{ flex: 1 }}
             />
-            <button type="submit">Add Item</button>
+            <Button 
+              type="submit" 
+              variant="contained" 
+              color="primary"
+              sx={{ mt: 2 }}
+            >
+              Add Item
+            </Button>
           </form>
         </section>
 
         <section className="items-section">
-          <h2>Items from Database</h2>
-          {loading && <p>Loading data...</p>}
-          {error && <p className="error">{error}</p>}
+          <Typography variant="h5" component="h2" gutterBottom>
+            Items from Database
+          </Typography>
+          
+          {loading && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
+              <CircularProgress />
+            </Box>
+          )}
+          
+          {error && <Alert severity="error" sx={{ mt: 2, mb: 2 }}>{error}</Alert>}
+          
           {!loading && !error && (
             data.length > 0 ? (
-              <table className="items-table">
-                <thead>
-                  <tr>
-                    <th>Item Name</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map(item => (
-                    <tr key={item.id}>
-                      <td>{item.name}</td>
-                      <td>
-                        <button
-                          className="delete-button"
-                          onClick={() => handleDelete(item.id)}
-                          disabled={deleteLoading === item.id}
-                        >
-                          {deleteLoading === item.id ? 'Deleting...' : 'Delete'}
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <TableContainer component={Paper} sx={{ mt: 2 }}>
+                <Table aria-label="items table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell><Typography variant="subtitle2">Item Name</Typography></TableCell>
+                      <TableCell align="right"><Typography variant="subtitle2">Actions</Typography></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {data.map(item => (
+                      <TableRow key={item.id} hover>
+                        <TableCell>{item.name}</TableCell>
+                        <TableCell align="right">
+                          <Button
+                            variant="contained"
+                            color="error"
+                            size="small"
+                            startIcon={<DeleteIcon />}
+                            onClick={() => handleDelete(item.id)}
+                            disabled={deleteLoading === item.id}
+                          >
+                            {deleteLoading === item.id ? 'Deleting...' : 'Delete'}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             ) : (
-              <p>No items found. Add some!</p>
+              <Typography variant="body1" sx={{ p: 2 }}>
+                No items found. Add some!
+              </Typography>
             )
           )}
         </section>

@@ -1,3 +1,4 @@
+/* Main application container */
 .App {
   text-align: center;
   max-width: 800px;
@@ -5,6 +6,7 @@
   padding: 20px;
 }
 
+/* Header styles */
 .App-header {
   background-color: #282c34;
   padding: 20px;
@@ -18,12 +20,14 @@
   font-size: 1.8rem;
 }
 
+/* Main content layout */
 main {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
+/* Section containers - mainly used for spacing and layout now that we use MUI */
 section {
   background-color: #f5f5f5;
   padding: 20px;
@@ -31,20 +35,17 @@ section {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Form styling */
 .add-item-section form {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
 }
 
-input {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
+/* The styles below are kept for any non-MUI elements still in use */
 
-button {
+button:not(.MuiButton-root) {
   padding: 8px 16px;
   background-color: #61dafb;
   color: #282c34;
@@ -54,74 +55,33 @@ button {
   font-weight: bold;
 }
 
-button:hover {
+button:not(.MuiButton-root):hover {
   background-color: #21a1c9;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-button.delete-button {
-  background-color: #f44336;
-  color: white;
-  padding: 5px 10px;
-  margin-left: 10px;
-}
-
-button.delete-button:hover {
-  background-color: #d32f2f;
-}
-
-button:disabled {
+button:not(.MuiButton-root):disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }
 
-button:disabled:hover {
+button:not(.MuiButton-root):disabled:hover {
   background-color: #cccccc;
 }
 
-li:last-child {
-  border-bottom: none;
-}
-
-.error {
+/* Error message styling (fallback for non-MUI alerts) */
+.error:not(.MuiAlert-root) {
   color: #d32f2f;
-}
-
-.items-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  text-align: left;
-}
-
-.items-table th,
-.items-table td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #ddd;
-}
-
-.items-table th {
-  background-color: #f2f2f2;
   font-weight: bold;
+  margin: 10px 0;
 }
 
-.items-table tr:last-child td {
-  border-bottom: none;
-}
-
-.items-table tr:hover {
-  background-color: #f5f5f5;
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .App {
+    padding: 10px;
+  }
+  
+  section {
+    padding: 15px;
+  }
 }

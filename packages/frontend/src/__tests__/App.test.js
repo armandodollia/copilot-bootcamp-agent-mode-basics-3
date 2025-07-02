@@ -5,6 +5,11 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import App from '../App';
 
+// Mock Material-UI components that might cause issues in tests
+jest.mock('@mui/material/CircularProgress', () => function MockCircularProgress() {
+  return <div data-testid="loading-spinner">Loading data...</div>;
+});
+
 // Mock server to intercept API requests
 const server = setupServer(
   // GET /api/items handler
@@ -69,7 +74,7 @@ describe('App Component', () => {
     });
 
     // Initially shows loading state
-    expect(screen.getByText('Loading data...')).toBeInTheDocument();
+    expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
 
     // Wait for items to load
     await waitFor(() => {
@@ -87,11 +92,11 @@ describe('App Component', () => {
 
     // Wait for items to load
     await waitFor(() => {
-      expect(screen.queryByText('Loading data...')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('loading-spinner')).not.toBeInTheDocument();
     });
 
     // Fill in the form and submit
-    const input = screen.getByPlaceholderText('Enter item name');
+    const input = screen.getByLabelText('Item Name');
     await act(async () => {
       await user.type(input, 'New Test Item');
     });
@@ -152,7 +157,7 @@ describe('App Component', () => {
 
     // Wait for items to load
     await waitFor(() => {
-      expect(screen.queryByText('Loading data...')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('loading-spinner')).not.toBeInTheDocument();
     });
 
     // Find the delete button for the first item
@@ -187,7 +192,7 @@ describe('App Component', () => {
 
     // Wait for items to load
     await waitFor(() => {
-      expect(screen.queryByText('Loading data...')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('loading-spinner')).not.toBeInTheDocument();
     });
 
     // Find and click a delete button
