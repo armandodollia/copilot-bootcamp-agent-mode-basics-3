@@ -75,7 +75,12 @@ app.delete('/api/items/:id', (req, res) => {
 
     // Delete the item
     const deleteStmt = db.prepare('DELETE FROM items WHERE id = ?');
-    deleteStmt.run(id);
+    const result = deleteStmt.run(id);
+
+    // Check if deletion actually affected any rows
+    if (result.changes === 0) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
 
     res.status(200).json({ message: 'Item deleted successfully' });
   } catch (error) {
