@@ -13,6 +13,7 @@ The project documentation is organized into the following files:
 - [Code Style](../docs/code-style.md) - Coding style conventions including imports, syntax, and formatting
 - [Testing Practices](../docs/testing-practices.md) - Guidelines for writing and running tests
 - [MUI Guidelines](../docs/mui-guidelines.md) - Best practices for using Material-UI components
+- [GitHub Copilot Unit Test Instructions](../docs/copilot-unit-test-instructions.md) - Specific instructions for writing unit tests with GitHub Copilot
 
 ## Key Principles
 
