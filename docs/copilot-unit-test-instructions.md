@@ -5,8 +5,9 @@
 ## Test Philosophy & Standards
 
 ### Always execute these steps in order when unit testing!!!!
-- Add comments to outline the tests we need to write to fully cover the delete functionality in the file. 
-- The comments should be followed by empty tests with their title and description. 
-- Once you write a test, run it in verbose mode. 
-- Fix any problems found then run again until everything passes. 
+- Add comments to outline the tests we need to write to fully cover the feature. 
+- The comments should be followed by empty tests with their title and description.
+- When that is done, stop and prompt me to verify.
+- Once you write a test, run it in verbose mode.
+- Fix any problems found then run again until everything passes.
 - When that is done, stop and prompt me to verify.
